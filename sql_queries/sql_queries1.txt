@@ -1,0 +1,8 @@
+select count(*) from (select pmid, count(*) as c from drug_names group by pmid order by count(*) desc) d where c>4;
+
+insert into drug_names_temp (rxcui, rxaui, name, original_text, pmid, start, end, time) select rxcui, rxaui, name, original_text, pmid, start, end, time from drug_names;
+
+
+delete from drug_names where name in ( select name from (select name, count(distinct(pmid)) as cnt from drug_names a group by name order by cnt desc limit 600) b );
+
+delete from names where STR in ( select name from (select name, count(distinct(pmid)) as cnt from drug_names a group by name order by cnt desc limit 600) b );
