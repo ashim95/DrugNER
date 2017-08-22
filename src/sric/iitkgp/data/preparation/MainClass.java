@@ -15,13 +15,13 @@ public class MainClass {
 		
 		Long startTime = System.nanoTime();
 
-		DrugNameDBUtils drugNameDBUtils = new DrugNameDBUtils();
+		DrugMatchDaoDBUtils drugNameDBUtils = new DrugMatchDaoDBUtils();
 		StringMatch stringMatch = new StringMatch();
 
 		AbstractDBUtils abstractDBUtils = new AbstractDBUtils();
 		abstractDBUtils.getReady();
 
-		NameDBUtils nameDBUtils = new NameDBUtils();
+		DrugNameDBUtils nameDBUtils = new DrugNameDBUtils();
 		nameDBUtils.getReady();
 
 		int count = 1;

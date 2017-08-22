@@ -10,10 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-public class NameDBUtils {
-	
+public class DrugNameDaoDBUtils {
 	private static final String PROPERTIES_FILE = "resources/application.properties";
-	
+
 	private static final Long DEFAULT_PREVIOUS_ID = (long) 0;
 	private static final Integer DEFAULT_FETCH_SIZE = 100;
 	private static final String DATABASE_DRUG_NAMES = "drugs";
@@ -24,43 +23,6 @@ public class NameDBUtils {
 	private String tableName;
 	private Integer totalPages;
 
-	// public List<DrugName> fetchAllNames() {
-	//
-	// Connection conn = MySqlConnect.makeConnection(DATABASE_DRUG_NAMES);
-	//
-	// String table = "names";
-	//
-	// Long count = this.countRecords(conn, table);
-	//
-	// System.out.println("Count: " + count.toString());
-	//
-	// int pages = (int) (count / fetchSize);
-	// pages = (count % fetchSize == 0) ? pages : pages + 1;
-	//
-	// long total = 0;
-	//
-	// long startTime = System.nanoTime();
-	//
-	//// pages = 2;
-	// System.out.println("Total Pages: " + pages);
-	// List<DrugName> drugNameList = new ArrayList<DrugName>();
-	//
-	// for (int i = 0; i < pages; i++) {
-	// List<DrugName> drugtList = this.fetchNextBatch(conn, table);
-	// if (i % 500 == 0)
-	// System.out.println("Fetching for Page: " + i);
-	// total += drugtList.size();
-	// drugNameList.addAll(drugtList);
-	// }
-	// long endTime = System.nanoTime();
-	// long duration = (endTime - startTime) / 1000000;
-	//
-	// System.out.println("Abstracts Fetched : " + total);
-	// System.out.println("Total time taken for fetching all abstracts: " +
-	// duration);
-	// return drugNameList;
-	// }
-
 	public void getReady() {
 		Connection conn = MySqlConnect.makeConnection(DATABASE_DRUG_NAMES);
 		this.conn = conn;
@@ -68,7 +30,7 @@ public class NameDBUtils {
 		this.tableName = table;
 
 		Long count = this.countRecords(conn, table);
-//		count = (long) 10;
+		// count = (long) 10;
 		System.out.println("Total Entries present in names: " + count.toString());
 		int pages = (int) (count / this.fetchSize);
 		pages = (count % this.fetchSize == 0) ? pages : pages + 1;
@@ -78,11 +40,11 @@ public class NameDBUtils {
 	}
 
 	public List<DrugName> fetchNextBatch() {
-		
-		if (this.currentPageNo == this.totalPages -1){
+
+		if (this.currentPageNo == this.totalPages - 1) {
 			return null;
 		}
-		
+
 		try {
 			Statement stmt = this.conn.createStatement();
 
@@ -133,30 +95,28 @@ public class NameDBUtils {
 	public void load_properties() {
 		// Read properties and connect to database
 		Properties properties = new Properties();
-		
-		try{
+
+		try {
 			properties.load(new FileInputStream(new File(PROPERTIES_FILE)));
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		String names_fetch_size = properties.getProperty("names_fetch_size");
 		this.fetchSize = Integer.parseInt(names_fetch_size);
-		
+
 		String names_previous_id = properties.getProperty("names_previous_id");
 		this.previousId = (long) Integer.parseInt(names_previous_id);
 	}
-	
-	public NameDBUtils() {
+
+	public DrugNameDaoDBUtils() {
 		this.previousId = DEFAULT_PREVIOUS_ID;
 		this.fetchSize = DEFAULT_FETCH_SIZE;
 		this.currentPageNo = -1;
 		load_properties();
 	}
 
-	public NameDBUtils(Integer fetchSize) {
+	public DrugNameDaoDBUtils(Integer fetchSize) {
 		this.previousId = DEFAULT_PREVIOUS_ID;
 		this.fetchSize = fetchSize;
 		this.currentPageNo = -1;

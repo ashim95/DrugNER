@@ -23,7 +23,7 @@ import org.apache.commons.configuration.HierarchicalConfiguration;
 
 import dragon.nlp.tool.PorterStemmer;
 import sric.iitkgp.data.preparation.DrugName;
-import sric.iitkgp.data.preparation.NameDBUtils;
+import sric.iitkgp.data.preparation.DrugNameDBUtils;
 import banner.eval.BANNER;
 import banner.tagging.Tagger;
 import banner.tokenization.Tokenizer;
@@ -104,7 +104,7 @@ public class CustomDictionaryTagger implements Tagger {
 
 		// Load Drug Names data From Database
 
-		NameDBUtils nameDBUtils = new NameDBUtils();
+		DrugNameDBUtils nameDBUtils = new DrugNameDBUtils();
 		nameDBUtils.getReady();
 
 		boolean allNames = false;

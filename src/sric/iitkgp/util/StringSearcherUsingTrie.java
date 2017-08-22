@@ -15,7 +15,7 @@ import banner.types.Mention;
 import banner.types.Sentence;
 import sric.iitkgp.data.preparation.AbstractDBUtils;
 import sric.iitkgp.data.preparation.DrugMatchDao;
-import sric.iitkgp.data.preparation.DrugNameDBUtils;
+import sric.iitkgp.data.preparation.DrugMatchDaoDBUtils;
 import sric.iitkgp.data.preparation.RawAbstract;
 
 public class StringSearcherUsingTrie {
@@ -45,7 +45,7 @@ public class StringSearcherUsingTrie {
 
 //		testImplementation(dictionary, tokenizer);
 
-		DrugNameDBUtils drugNameDBUtils = new DrugNameDBUtils();
+		DrugMatchDaoDBUtils drugNameDBUtils = new DrugMatchDaoDBUtils();
 		AbstractDBUtils abstractDBUtils = new AbstractDBUtils();
 		abstractDBUtils.getReady();
 		
