@@ -64,8 +64,8 @@ public class DrugNameDBUtils {
 	public void getReady() {
 		Connection conn = MySqlConnect.makeConnection(DATABASE_DRUG_NAMES);
 		this.conn = conn;
-		String table = "names";
-		this.tableName = table;
+//		String table = "names";
+		String table = this.tableName ;
 
 		Long count = this.countRecords(conn, table);
 //		count = (long) 10;
@@ -147,6 +147,9 @@ public class DrugNameDBUtils {
 		
 		String names_previous_id = properties.getProperty("names_previous_id");
 		this.previousId = (long) Integer.parseInt(names_previous_id);
+		
+		String tableName = properties.getProperty("drug_names_table_name");
+		this.tableName = tableName;
 	}
 	
 	public DrugNameDBUtils() {
@@ -158,6 +161,8 @@ public class DrugNameDBUtils {
 
 	public DrugNameDBUtils(Integer fetchSize) {
 		this.previousId = DEFAULT_PREVIOUS_ID;
+		load_properties();
+		
 		this.fetchSize = fetchSize;
 		this.currentPageNo = -1;
 	}
