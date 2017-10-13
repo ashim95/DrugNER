@@ -4,7 +4,7 @@
     <eval>
       <datasetName>banner.eval.dataset.BioCDataset</datasetName>
       <dataset>
-        <filename>resources/ddiDataInBioC_train.xml</filename>
+        <filename>resources/ddiAllDataInBioC_train.xml</filename>
         <foldType>Drug</foldType>
       </dataset>
       <idInputFilename>output/ids.txt</idInputFilename>
@@ -13,7 +13,7 @@
       <outputFilename>output/output.txt</outputFilename>
       <inContextAnalysisFilename>output/contextAnalysis.html</inContextAnalysisFilename>
       <mentionFilename>output/mention.txt</mentionFilename>
-      <modelFilename>output/DrugNER_model_ddi_4.bin</modelFilename>
+      <modelFilename>output/DrugNER_model_ddi_50.bin</modelFilename>
       <lemmatiserDataDirectory>banner/banner_files/nlpdata/lemmatiser</lemmatiserDataDirectory>
       <posTaggerDataDirectory>banner/banner_files/nlpdata/tagger</posTaggerDataDirectory>
       <posTagger>dragon.nlp.tool.HeppleTagger</posTagger>
@@ -27,7 +27,7 @@
       <mentionTypes>Required</mentionTypes>
       <sameTypeOverlapOption>Union</sameTypeOverlapOption>
       <differentTypeOverlapOption>Exception</differentTypeOverlapOption>
-      <dictionaryType>rxnorm</dictionaryType>
+      <dictionaryType>drug</dictionaryType>
       <dictionaryTagger>CustomDictionaryTagger</dictionaryTagger>
     </eval>
   </banner>

@@ -24,11 +24,10 @@ import dragon.nlp.tool.Tagger;
 import dragon.nlp.tool.lemmatiser.EngLemmatiser;
 
 public class RunModel {
-	
+
 	private static Tokenizer tokenizer;
 	private static CRFTagger tagger;
-	
-	
+
 	public static void main(String[] args) {
 		HierarchicalConfiguration config;
 
@@ -37,22 +36,21 @@ public class RunModel {
 		} catch (ConfigurationException e) {
 			throw new RuntimeException(e);
 		}
-		
+
 		long start = System.currentTimeMillis();
 		EngLemmatiser lemmatiser = BANNER.getLemmatiser(config);
 		Tagger posTagger = BANNER.getPosTagger(config);
 		tokenizer = BANNER.getTokenizer(config);
-		
-		
+
 		HierarchicalConfiguration localConfig = config.configurationAt(BANNER.class.getPackage().getName());
 		String modelFilename = localConfig.getString("modelFilename");
 		System.out.println("modelFilename=" + modelFilename);
-		
+
 		Dataset dataset = BANNER.getDataset(config);
 		List<Sentence> sentences = new ArrayList<Sentence>(dataset.getSentences());
-		
+
 		changeType(sentences);
-		
+
 		Collections.sort(sentences, new Comparator<Sentence>() {
 			@Override
 			public int compare(Sentence s1, Sentence s2) {
@@ -61,27 +59,25 @@ public class RunModel {
 		});
 
 		System.out.println("Completed input: " + (System.currentTimeMillis() - start) + " ms");
-		
-		
+
 		try {
 			tagger = CRFTagger.load(new File(modelFilename), lemmatiser, posTagger, null);
-			
+
 			List<Sentence> processedSentences = process(sentences);
 			changeType(processedSentences);
 			System.out.println("===============");
 			System.out.println("Performance with BANNER:");
 			System.out.println("===============");
 			checkPerformance(sentences, processedSentences);
-			
-			
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("Execution of the program finished !!");
 	}
-	
+
 	private static void changeType(List<Sentence> sentences) {
 		for (Sentence s : sentences) {
 			for (Mention m : s.getMentions()) {
@@ -89,7 +85,7 @@ public class RunModel {
 			}
 		}
 	}
-	
+
 	private static List<Sentence> process(List<Sentence> sentences) {
 		int count = 0;
 		List<Sentence> sentences2 = new ArrayList<Sentence>();
@@ -104,14 +100,19 @@ public class RunModel {
 		}
 		return sentences2;
 	}
-	
-	
+
 	private static void checkPerformance(List<Sentence> annotatedSentences, List<Sentence> processedSentences) {
 		Performance performance = new Performance(MatchCriteria.Strict);
 		for (int i = 0; i < annotatedSentences.size(); i++) {
 			Sentence annotatedSentence = annotatedSentences.get(i);
 			Sentence processedSentence = processedSentences.get(i);
+			double prec = performance.getOverall().getPrecision();
 			performance.update(annotatedSentence, processedSentence);
+			double prec2 = performance.getOverall().getPrecision();
+//			if (prec2 < prec) {
+//				System.out.println(annotatedSentence.getMentions().toString());
+//				System.out.println(processedSentence.getMentions().toString());
+//			}
 		}
 		performance.print();
 	}

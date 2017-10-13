@@ -53,7 +53,7 @@ public class TrainModelWithDictionary {
 		String modelFilename = localConfig.getString("modelFilename");
 		Set<Sentence> sentences = dataset.getSentences();
 		
-		
+		System.out.println("No. of Sentences Loaded : " + sentences.size());
 		Tokenizer tokenizer = BANNER.getTokenizer(config);
 		CustomDictionaryTagger dictionary = null;
 		dictionary = new CustomDictionaryTagger();
@@ -65,14 +65,14 @@ public class TrainModelWithDictionary {
 			e.printStackTrace();
 		}
 
-		System.out.println("Completed input: " + (System.currentTimeMillis() - start));
+		System.out.println("Completed input in : " + (System.currentTimeMillis() - start) + " milliseconds");
 		System.out.println("Entity types: " + EntityType.getTypes());
 		
 		start = System.currentTimeMillis();
 		
 		System.out.println("Training data loaded, starting training");
 		
-		FeatureSet featureSet = new FeatureSet(tagFormat, lemmatiser, posTagger, dictionary, null, null, 
+		CustomFeatureSet featureSet = new CustomFeatureSet(tagFormat, lemmatiser, posTagger, dictionary, null, 
 				mentionTypes, sameTypeOverlapOption, differentTypeOverlapOption);
 		CRFTagger tagger = CRFTagger.train(sentences, crfOrder, tagFormat, featureSet);
 		System.out.println("Training complete, saving model");

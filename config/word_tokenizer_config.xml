@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<banner-configuration>
+	<banner>
+		<eval>
+			<dataset>
+				<filename>resources/ddiAllDataInBioC_train.xml</filename>
+				<foldType>Drug</foldType>
+			</dataset>
+		</eval>
+	</banner>
+	<datasetName>banner.eval.dataset.BioCDataset</datasetName>
+	<datasetFilename>resources/ddiAllDataInBioC_train.xml
+	</datasetFilename>
+	<datasetFoldType>Drug</datasetFoldType>
+	<tokenizer>banner.tokenization.FineTokenizer</tokenizer>
+	<tagFormat>IOB</tagFormat>
+	<mentionTypes>Required</mentionTypes>
+	<sameTypeOverlapOption>Union</sameTypeOverlapOption>
+	<differentTypeOverlapOption>Exception</differentTypeOverlapOption>
+	<conllFileName>resources/ddiAllDataInCONLL_train.txt</conllFileName>
+</banner-configuration>
